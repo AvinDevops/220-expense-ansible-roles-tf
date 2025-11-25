@@ -1,0 +1,34 @@
+- name: installing mysql server
+  ansible.builtin.dnf:
+    name: mysql-server >= 8.0
+    state: present
+  
+- name: enable and start mysql server
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: installing python dependencies for mysql
+  ansible.builtin.pip:
+    name:
+    - PyMySQL
+    - cryptography
+    executable: pip3.9
+
+- name: checking root password 
+  community.mysql.mysql_info:
+    login_user: "{{login_user}}"
+    login_password: "{{mysql_root_password}}"
+    login_host: db.aviexpense.online
+    filter: version
+  register: mysql_output
+  ignore_errors: yes
+
+- name: printing mysql output
+  ansible.builtin.debug:
+    msg: "output is : {{mysql_output}}"
+
+- name: setting password for root
+  ansible.builtin.command: mysql_secure_installation --set-root-pass {{mysql_root_password}}
+  when: mysql_output.failed is true

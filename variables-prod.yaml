@@ -1,0 +1,4 @@
+login_host: db-prod.aviexpense.online
+login_user: root
+login_password: ExpenseApp1
+DB_HOST: db-prod.aviexpense.online
