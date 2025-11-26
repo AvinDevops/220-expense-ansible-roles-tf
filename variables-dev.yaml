@@ -2,3 +2,4 @@ login_host: db-dev.aviexpense.online
 login_user: root
 login_password: ExpenseApp1
 DB_HOST: db-dev.aviexpense.online
+BACKEND_API_URL: backend.app-dev.aviexpense.online
